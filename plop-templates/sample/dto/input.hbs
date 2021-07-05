@@ -1,0 +1,13 @@
+import { InputType, PartialType } from '@nestjs/graphql';
+import { Injectable } from '@nestjs/common';
+
+@Injectable()
+@InputType()
+export class Create{{> modelName}}Input {
+    title: string;
+
+    content: string;
+}
+
+@InputType()
+export class Update{{> modelName}}Input extends PartialType(Create{{> modelName}}Input) {}

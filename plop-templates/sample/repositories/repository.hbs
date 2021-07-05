@@ -1,0 +1,6 @@
+import { EntityRepository } from 'typeorm';
+import { CommonRepository } from 'src/modules/common/common.repository';
+import { {{> modelName}} } from '../entities/{{> fileName}}.entity';
+
+@EntityRepository({{> modelName}})
+export class {{> repositoryName}} extends CommonRepository<{{> modelName}}> {}

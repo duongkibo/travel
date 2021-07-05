@@ -1,0 +1,53 @@
+import { Entity, Column, BaseEntity, DeepPartial } from 'typeorm';
+import { CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
+import { Node, PaginationBase } from 'src/graphql/types/common.interface.entity';
+import { snowflake } from 'src/helpers/common';
+
+@ObjectType({
+    implements: [Node],
+})
+@Entity()
+export class {{> modelName}} extends BaseEntity implements Node {
+    @Field(() => ID)
+    @Column('bigint', {
+        primary: true,
+        unsigned: true,
+    })
+    id: string;
+
+    @Column({ length: 500, comment: 'Title' })
+    title: string;
+
+    @Column('text', {
+        comment: 'Content of blog',
+    })
+    content: string;
+
+    @Field(() => Int)
+    @Column('int', {
+        default: 0,
+        comment: 'Total view by client',
+    })
+    views: number;
+
+    @Column({
+        default: true,
+        comment: 'Set published',
+    })
+    isPublished: boolean;
+
+    @CreateDateColumn()
+    createdAt: Date;
+
+    @UpdateDateColumn()
+    updatedAt: Date;
+
+    constructor(data: DeepPartial<{{> modelName}}>) {
+        super();
+        Object.assign(this, { id: snowflake.nextId(), ...data });
+    }
+}
+
+@ObjectType()
+export class {{> paginationConnectionName}} extends PaginationBase({{> modelName}}) {}

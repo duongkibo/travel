@@ -1,0 +1,16 @@
+import DataLoader from 'dataloader';
+import { Injectable, Scope } from '@nestjs/common';
+import { {{> modelName}} } from '../entities/{{> fileName}}.entity';
+import { {{> repositoryName}} } from '../repositories/{{> fileName}}.repository';
+
+@Injectable({
+    scope: Scope.REQUEST,
+})
+export class {{> dataloaderName}} extends DataLoader<any, {{> modelName}}> {
+    constructor(private readonly {{> repositoryInstanceName}}: {{> repositoryName}}) {
+        super(async (ids) => {
+            const rows = await this.{{> repositoryInstanceName}}.findByIds(ids as any[]);
+            return ids.map((id) => rows.find((x) => x.id == id) ?? new Error('Not found'));
+        });
+    }
+}

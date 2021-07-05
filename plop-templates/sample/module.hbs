@@ -1,0 +1,24 @@
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { {{> repositoryName}} } from './repositories/{{kebabCase name}}.repository';
+import { {{> dataloaderName}} } from './dataloaders/{{kebabCase name}}.dataloader';
+import { {{> serviceName}} } from './services/{{kebabCase name}}.service';
+import { {{> queryResolverName}} } from './resolvers/{{kebabCase name}}_query.resolver';
+import { {{> mutationResolverName}} } from './resolvers/{{kebabCase name}}_mutation.resolver';
+
+@Module({
+    imports: [TypeOrmModule.forFeature([{{> repositoryName}}])],
+    providers: [
+        // Resolver
+        {{> queryResolverName}},
+        {{> mutationResolverName}},
+
+        // DataLoader
+        {{> dataloaderName}},
+
+        // Service
+        {{> serviceName}},
+    ],
+    exports: [{{> dataloaderName}}, {{> serviceName}}],
+})
+export class {{> modelName }}Module {}

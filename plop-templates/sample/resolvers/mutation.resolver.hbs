@@ -1,0 +1,28 @@
+import { Resolver, Args, Mutation, ID } from '@nestjs/graphql';
+import { {{> modelName}} } from '../entities/{{> fileName}}.entity';
+import { {{> serviceName}} } from '../services/{{> fileName}}.service';
+import { Create{{> modelName}}Input, Update{{> modelName}}Input } from '../dto/{{> fileName}}.input';
+
+@Resolver(() => {{> modelName}})
+export class {{> mutationResolverName}} {
+    constructor(private readonly {{> serviceInstanceName}}: {{> serviceName}}) {}
+
+    @Mutation(() => {{> modelName}})
+    async create{{> modelName}}(@Args('input') input: Create{{> modelName}}Input): Promise<{{> modelName}}> {
+        const entity = await this.{{> serviceInstanceName}}.create(input);
+        return entity;
+    }
+
+    @Mutation(() => {{> modelName}})
+    async update{{> modelName}}(
+        @Args('id', { type: () => ID }) id: string,
+        @Args('input') input: Update{{> modelName}}Input,
+    ): Promise<{{> modelName}}> {
+        return this.{{> serviceInstanceName}}.update(id, input);
+    }
+
+    @Mutation(() => Boolean)
+    async remove{{> modelName}}(@Args('id', { type: () => ID }) id: string): Promise<boolean> {
+        return this.{{> serviceInstanceName}}.remove(id);
+    }
+}

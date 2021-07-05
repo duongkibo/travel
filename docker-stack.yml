@@ -1,0 +1,39 @@
+version: '3.3'
+services:
+  api:
+    image: demo-api:latest
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+    environment:
+      TZ: UTC
+      # NODE_ENV: ${NODE_ENV}
+      PORT: 3000
+      DATABASE_PASSWORD: postgres
+      DATABASE_NAME: nest_dev
+      DATABASE_USER: postgres
+      DATABASE_HOST: demo_db
+      DATABASE_SYNC: 'true'
+      DATABASE_PORT: 5432
+      JWT_SECRET: golf_secret
+    depends_on:
+      - demo_db
+    # volumes:
+    #   - /home/ntq/udonleaf/public:/home/node/public
+    #   - /home/ntq/udonleaf/webapp:/home/node/webapp
+    #   - /home/ntq/udonleaf/uploads:/home/node/uploads
+    #   - /home/ntq/udonleaf/logs:/home/node/logs
+    networks:
+      - api_network
+      - demo_base
+
+# volumes:
+#   data01:
+#     driver: local
+
+networks:
+  api_network:
+    driver: overlay
+    attachable: true
+  demo_base:
+    external: true

@@ -1,0 +1,23 @@
+import { Resolver, Query, Args, ID } from '@nestjs/graphql';
+import { {{> modelName}}, {{> paginationConnectionName}} } from '../entities/{{> fileName}}.entity';
+import { {{> serviceName}} } from '../services/{{> fileName}}.service';
+import { {{> dataloaderName}} } from '../dataloaders/{{> fileName}}.dataloader';
+import { PaginationArgs } from 'src/graphql/types/common.args';
+
+@Resolver(() => {{> modelName}})
+export class {{> queryResolverName}} {
+    constructor(private readonly {{> serviceInstanceName}}: {{> serviceName}}, private readonly {{> dataloaderInstanceName}}: {{> dataloaderName}}) {}
+
+    @Query(() => {{> modelName}}, {
+        nullable: true,
+        description: 'Get {{ name }} by Id',
+    })
+    async {{ camelCase name}}(@Args({ name: 'id', type: () => ID }) id: string): Promise<{{> modelName}}> {
+        return await this.{{> dataloaderInstanceName}}.load(id);
+    }
+
+    @Query(() => {{> paginationConnectionName}}, { nullable: true })
+    async {{ camelCase name}}s(@Args() data: PaginationArgs): Promise<{{> paginationConnectionName}}> {
+        return this.{{> serviceInstanceName}}.pagination(data);
+    }
+}
