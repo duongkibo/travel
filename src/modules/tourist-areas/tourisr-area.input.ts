@@ -97,3 +97,15 @@ export class LocationInput {
   location: string;
 
 }
+
+export class RateTouristAreaInput {
+  @ApiProperty({nullable: false,required: true})
+  touristAreasId: string;
+
+  @ApiProperty({nullable: true, default: 1})
+  star: number;
+
+  @ApiProperty({nullable: true, default: 1})
+  comment?: string;
+
+}
