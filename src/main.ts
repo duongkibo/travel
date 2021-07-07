@@ -13,7 +13,10 @@ import cookieParser from 'cookie-parser';
 import { UserInputError } from 'apollo-server';
 import { json } from 'body-parser';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+  
+var admin = require('firebase-admin');
 
+var serviceAccount = require('./ServiceAccountKey.json');
 
 const PORT = parseInt(process.env.APP_PORT ?? '3000', 10);
 
@@ -45,6 +48,10 @@ async function bootstrap() {
       },
     }),
   );
+  admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: 'https://ecommerce-9f1e1.firebaseio.com'
+  });
   app.use(json({ limit: '10mb' })); //The default limit defined by body-parser is 100kb
   app.use(helmet());
   app.use(compression());
