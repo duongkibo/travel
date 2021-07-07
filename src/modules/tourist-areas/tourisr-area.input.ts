@@ -95,7 +95,7 @@ export class PaymentCardInput {
 export class LocationInput {
   @ApiProperty({nullable: false,required: false})
   location: string;
-
+  tokenOfFCM?: string;
 }
 
 export class RateTouristAreaInput {

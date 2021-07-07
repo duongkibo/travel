@@ -79,6 +79,7 @@ export class TouristAreasService {
     const queryBuilder = this.areaRepository.createQueryBuilder(aliasBuilder);
     queryBuilder.leftJoinAndSelect("tourist_areas.areaMedias", "media");
     queryBuilder.leftJoinAndSelect("tourist_areas.cities", "cities");
+    queryBuilder.leftJoinAndSelect("tourist_areas.rates", "rates");
     queryBuilder.leftJoinAndSelect("cities.countries", "countries");
     // queryBuilder.leftJoinAndSelect('countries.countries', 'country');
     queryBuilder.andWhere(`tourist_areas.id = '${id}'`);

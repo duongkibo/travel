@@ -6,7 +6,6 @@ import { User } from '../users/entities/users.entity';
 import { BookAreaInput, LocationInput, NewAreaInput, SearchAreaInput } from './tourisr-area.input';
 import { TouristAreasService } from './tourist-areas.service';
 import { UserBookTourService } from './user-book-tour.service';
-const admin = require('firebase-admin');
 
 @ApiTags('user-book-tour')
 @Controller('user-book-tour')
@@ -16,18 +15,6 @@ export class UserBookTourController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   async bookArea(@Body() createUser: BookAreaInput, @CurrentUserRest() user: User) {
-    let message = {
-        notification: 'Đây là đài tiếng nói Việt Nam',
-    };
-    admin.messaging().send(message)
-    .then((response) => {
-        // Response is a message ID string.
-        console.log('send message success')
-    })
-    .catch((error) => {
-      console.log(error)
-      console.log('send message failed')
-    });
     return this.userBookTourService.createBook(createUser, user.id);
   }
 
@@ -35,7 +22,7 @@ export class UserBookTourController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   async sendLocation(@Body() input: LocationInput, @CurrentUserRest() user: User) {
-    return this.userBookTourService.createUserLocation(input.location, user.id);
+    return this.userBookTourService.createUserLocation(input.location, user.id, input?.tokenOfFCM || undefined);
   }
 
   @Get(
