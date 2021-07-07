@@ -95,5 +95,17 @@ export class PaymentCardInput {
 export class LocationInput {
   @ApiProperty({nullable: false,required: false})
   location: string;
+  tokenOfFCM?: string;
+}
+
+export class RateTouristAreaInput {
+  @ApiProperty({nullable: false,required: true})
+  touristAreasId: string;
+
+  @ApiProperty({nullable: true, default: 1})
+  star: number;
+
+  @ApiProperty({nullable: true, default: 1})
+  comment?: string;
 
 }
