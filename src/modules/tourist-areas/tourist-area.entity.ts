@@ -250,11 +250,11 @@ export class TouristAreasRates implements Node {
     primary: true,
   })
   @JoinColumn({ name: "tourist_areas_id" })
-  touristAreas: Promise<TouristArea>;
+  touristAreas: TouristArea;
 
   @ManyToOne(() => User, (user) => user.id, { primary: true })
-  @JoinColumn({ name: "user_id" })
-  users: Promise<User>;
+  @JoinColumn({ name: "user_id", referencedColumnName: 'id' })
+  users: User;
 
   @CreateDateColumn({ type: "timestamp" })
   createdAt: Date;

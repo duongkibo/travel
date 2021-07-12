@@ -88,11 +88,11 @@ import { User } from '../users/entities/users.entity';
 
     @ManyToOne(() => Hotels, (hotels) => hotels.id, { primary: true })
     @JoinColumn({ name: 'hotel_id' })
-    hotels: Promise<Cities>;
+    hotels: Cities;
 
     @ManyToOne(() => User, (user) => user.id, { primary: true })
-    @JoinColumn({ name: 'user_id' })
-    users: Promise<User>;
+    @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
+    users: User;
 
     @CreateDateColumn({ type: 'timestamp' })
     createdAt: Date;
